@@ -21,7 +21,7 @@ const Home: React.FC = () => {
   return (
     <>
       <GlobalStyles />
-      <PaymentPage />
+      <MainPage />
     </>
   );
 };
