@@ -2,10 +2,7 @@ import React from 'react';
 import { useField } from 'formik';
 import { StyledInput, StyledErrorMessage } from './styled';
 
-
-// const startsInputSymbols: string[] = ['7', '8'];
-
-const PaymentAmountInput = ({ ...props }) => {
+const AmountInput = ({ ...props }) => {
   const [field, meta, helpers] = useField(props);
 
   const handlePaymentAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,4 +29,4 @@ const PaymentAmountInput = ({ ...props }) => {
   );
 };
 
-export default PaymentAmountInput;
+export default AmountInput;

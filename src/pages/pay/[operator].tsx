@@ -10,7 +10,9 @@ const PayPage: React.FC = () => {
     return <div>Загрузка...</div>;
   }
 
-  return <PaymentPage operator={operator as string} />;
+  return (
+    <PaymentPage operator={operator as string} />
+  );
 };
 
 export default PayPage;
