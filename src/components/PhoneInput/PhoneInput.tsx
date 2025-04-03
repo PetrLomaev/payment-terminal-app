@@ -2,8 +2,7 @@ import React from 'react';
 import { useField } from 'formik';
 import { StyledInput, StyledErrorMessage } from './styled';
 
-
-// const startsInputSymbols: string[] = ['7', '8'];
+const inputPlaceholder = '+7(XXX)XXX-XX-XX';
 
 const PhoneInput = ({ ...props }) => {
   const [field, meta, helpers] = useField(props);
@@ -59,7 +58,7 @@ const PhoneInput = ({ ...props }) => {
         onChange={handlePhoneChange}
         onKeyDown={handleKeyDown}
         id="phoneNumber"
-        placeholder="+7(XXX)XXX-XX-XX"
+        placeholder={inputPlaceholder}
         maxLength={16}
         className={`form-control ${meta.touched && meta.error ? 'is-invalid' : ''}`}
       />

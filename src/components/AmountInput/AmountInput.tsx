@@ -2,6 +2,8 @@ import React from 'react';
 import { useField } from 'formik';
 import { StyledInput, StyledErrorMessage } from './styled';
 
+const inputPlaceholder = 'Сумма (руб)';
+
 const AmountInput = ({ ...props }) => {
   const [field, meta, helpers] = useField(props);
 
@@ -19,7 +21,7 @@ const AmountInput = ({ ...props }) => {
         type="number"
         onChange={handlePaymentAmountChange}
         id="paymentAmount"
-        placeholder="Сумма (руб)"
+        placeholder={inputPlaceholder}
         className={`form-control ${meta.touched && meta.error ? 'is-invalid' : ''}`}
       />
       {meta.touched && meta.error ? (

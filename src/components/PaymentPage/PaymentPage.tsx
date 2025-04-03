@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import React, { useState } from 'react';
 import { Formik } from 'formik';
 import getSchema from '@/utils/validation';
 import { useRouter } from 'next/router';
 import PhoneInput from '../PhoneInput/PhoneInput';
 import AmountInput from '../AmountInput/AmountInput';
-import { Loader, FormContainer, FormStyled, BackButton, PayButton, PaymentStatusContainer, PaymentResultMessage } from './styled';
+import { Title, Loader, FormContainer, FormStyled, BackButton, PayButton, PaymentResultMessage } from './styled';
+import { operatorsList } from '../data/localData';
 
 const PaymentPage: React.FC<{ operator: string }> = ({ operator }) => {
   const { paymentSchema } = getSchema();
@@ -13,6 +16,17 @@ const PaymentPage: React.FC<{ operator: string }> = ({ operator }) => {
   const [paymentStatus, setPaymentStatus] = useState('');
   const router = useRouter();
 
+  const currentOperator = operatorsList.filter((elem) => elem.id === operator)[0];
+
+  const mainTitleText = 'Оплата оператора';
+  const operationSuccessText = 'Оплата прошла успешно! Переход на главную страницу...';
+  const operationErrorText = 'Во время оплаты произошла ошибка. Попробуйте снова';
+  const payButtonNormalText = 'Оплатить';
+  const payButtonLoadingText = 'Обработка запроса...';
+  const backButtonText = 'Вернуться на главный экран';
+  const paymentResultMessageColorSuccess = 'green';
+  const paymentResultMessageColorFailure = 'red';
+
   const operation = (): Promise<boolean> => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -20,7 +34,7 @@ const PaymentPage: React.FC<{ operator: string }> = ({ operator }) => {
         if (isSuccess) {
           resolve(isSuccess);
         } else {
-          reject('Во время оплаты произошла ошибка');
+          reject(operationErrorText);
         }
       }, 2000)
     });
@@ -33,7 +47,7 @@ const PaymentPage: React.FC<{ operator: string }> = ({ operator }) => {
       const operationResult = await operation();
       if (operationResult) {
         setShowError(false);
-        setPaymentStatus('Оплата прошла успешно!');
+        setPaymentStatus(operationSuccessText);
         setTimeout(() => {
           router.push('/');
         }, 2000);
@@ -50,12 +64,11 @@ const PaymentPage: React.FC<{ operator: string }> = ({ operator }) => {
     router.push('/');
   };
 
-
   return (
     <>
       <FormContainer>
-        <h1>Форма оплаты</h1>
-        <h3>Оплата оператора {operator}</h3>
+        <Title>{mainTitleText}</Title>
+        <Title>{currentOperator.name}</Title>
         <Formik
           initialValues={{
             phoneNumber: '',
@@ -64,7 +77,7 @@ const PaymentPage: React.FC<{ operator: string }> = ({ operator }) => {
           validationSchema={paymentSchema}
           onSubmit={handleSubmit}
         >
-          {({ errors, touched }) => (
+          {() => (
             <FormStyled>
               <PhoneInput
                 name="phoneNumber"
@@ -73,22 +86,20 @@ const PaymentPage: React.FC<{ operator: string }> = ({ operator }) => {
                 name="paymentAmount"
               />
               <PayButton type="submit" disabled={loading}>
-                {loading ? 'Обработка запроса...' : 'Оплатить'}
+                {loading ? payButtonLoadingText : payButtonNormalText}
               </PayButton>
-              <BackButton onClick={handleBack}>Вернуться на главный экран</BackButton>
+              <BackButton type="button" onClick={handleBack}>{backButtonText}</BackButton>
               {loading && <Loader />}
-              <PaymentStatusContainer>
-                {paymentStatus && (
-                  <PaymentResultMessage
-                    $divColor={showError ? 'red' : 'green'}>
-                    {paymentStatus}
-                  </PaymentResultMessage>
-                )}
-              </PaymentStatusContainer>
+              {paymentStatus && (
+                <PaymentResultMessage
+                  $divColor={showError ? paymentResultMessageColorFailure : paymentResultMessageColorSuccess}
+                >
+                  {paymentStatus}
+                </PaymentResultMessage>
+              )}
             </FormStyled>
           )}
         </Formik>
-
       </FormContainer>
     </>
   );

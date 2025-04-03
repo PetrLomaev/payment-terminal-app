@@ -1,32 +1,33 @@
 import React from 'react';
 import Link from 'next/link';
 import { ListContainer, Title, OperatorButton, IconLogo } from './styled';
+import { operatorsList } from '../data/localData';
 
-const operatorList: string[] = ['МТС', 'Билайн', 'Мегафон'];
+const mainTitleText = 'Легко и быстро пополнить Ваш баланс!';
+const secondaryTitleText = 'Выберите оператора';
+
 
 const MainPage: React.FC = () => {
   return (
     <ListContainer>
-      <Title>Легко и быстро пополнить Ваш баланс!</Title>
-      <Title>Выберите оператора</Title>
-
-      {operatorList.map((operator) => (
+      <Title>{mainTitleText}</Title>
+      <Title>{secondaryTitleText}</Title>
+      {operatorsList.map((operator) => (
         <Link
-          key={operator}
-          href={`/pay/${operator}`}
+          key={operator.id}
+          href={`/pay/${operator.id}`}
           passHref
           legacyBehavior
         >
           <OperatorButton>
-            {operator}
+            {operator.name}
           </OperatorButton>
         </Link>
       ))}
       <IconLogo
         src="/images/operators.jpg"
-        alt='Операторы'
+        alt="Operators"
       />
-
     </ListContainer>
   );
 };

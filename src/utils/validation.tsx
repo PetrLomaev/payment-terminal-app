@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 const errRequired = 'Не должно быть пустым';
-const phoneNumErrInvalidFormat = 'Формат номера телефона +7(XXX)XXX-XX-XX';
+const phoneNumErrInvalidFormat = 'Формат ввода +7(XXX)XXX-XX-XX';
 const phoneRegExp = /^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$/;
 const paymentAmountErrInvalidFormat = 'Неверный формат';
 const paymentAmountErrMin = 'Не менее 1 руб';

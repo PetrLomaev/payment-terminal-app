@@ -14,8 +14,13 @@ export default [
       },
     },
   },
-  {languageOptions: { globals: globals.browser }},
+  { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
+  {
+    rules: {
+      "@typescript-eslint/no-explicit-any": "error"
+    },
+  }
 ];
