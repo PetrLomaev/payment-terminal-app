@@ -2,6 +2,8 @@
 
 ## Project Description
 
+Displays the mobile operator payment page
+
 The following usage functions are available:
 
 - Includes a main screen with a list of operators and a payment form screen
